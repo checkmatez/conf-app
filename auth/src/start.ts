@@ -6,6 +6,11 @@ import { join } from 'path'
 import { ENV } from './config/constants'
 import { AuthResultType } from './graphql/auth-result-type'
 import {
+  GenerateTokensError,
+  GenerateTokensMutation,
+  GenerateTokensResponseType,
+} from './graphql/generate-tokens-mutation'
+import {
   LoginErrorType,
   LoginMutation,
   LoginResponseType,
@@ -39,6 +44,9 @@ const schema = makeSchema({
     LoginMutation,
     LoginResponseType,
     LoginErrorType,
+    GenerateTokensMutation,
+    GenerateTokensResponseType,
+    GenerateTokensError,
   ],
   outputs: {
     schema: join(__dirname, 'generated', 'schema.graphql'),

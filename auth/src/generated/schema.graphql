@@ -8,6 +8,14 @@ type AuthResult {
   user: User!
 }
 
+type GenerateTokensError implements InputError {
+  argErrors: [InputArgError!]!
+  code: String!
+  message: String!
+}
+
+union GenerateTokensResponse = AuthResult | GenerateTokensError
+
 type InputArgError {
   argName: String!
   message: String!
@@ -28,6 +36,7 @@ type LoginError implements InputError {
 union LoginResponse = AuthResult | LoginError
 
 type Mutation {
+  generateTokens(refreshToken: String!): GenerateTokensResponse!
   login(password: String!, username: String!): LoginResponse!
   signup(email: String, password: String!, username: String!): SignupResponse!
 }

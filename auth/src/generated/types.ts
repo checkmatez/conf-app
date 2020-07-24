@@ -25,6 +25,11 @@ export interface NexusGenRootTypes {
     refreshToken: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  GenerateTokensError: { // root type
+    argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
+    code: string; // String!
+    message: string; // String!
+  }
   InputArgError: { // root type
     argName: string; // String!
     message: string; // String!
@@ -52,12 +57,13 @@ export interface NexusGenRootTypes {
     nodes: NexusGenRootTypes['User'][]; // [User!]!
     total: number; // Int!
   }
-  InputError: NexusGenRootTypes['LoginError'] | NexusGenRootTypes['SignupError'];
+  InputError: NexusGenRootTypes['GenerateTokensError'] | NexusGenRootTypes['LoginError'] | NexusGenRootTypes['SignupError'];
   String: string;
   Int: number;
   Float: number;
   Boolean: boolean;
   ID: string;
+  GenerateTokensResponse: NexusGenRootTypes['AuthResult'] | NexusGenRootTypes['GenerateTokensError'];
   LoginResponse: NexusGenRootTypes['AuthResult'] | NexusGenRootTypes['LoginError'];
   SignupResponse: NexusGenRootTypes['AuthResult'] | NexusGenRootTypes['SignupError'];
 }
@@ -71,6 +77,11 @@ export interface NexusGenFieldTypes {
     refreshToken: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  GenerateTokensError: { // field return type
+    argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
+    code: string; // String!
+    message: string; // String!
+  }
   InputArgError: { // field return type
     argName: string; // String!
     message: string; // String!
@@ -81,6 +92,7 @@ export interface NexusGenFieldTypes {
     message: string; // String!
   }
   Mutation: { // field return type
+    generateTokens: NexusGenRootTypes['GenerateTokensResponse']; // GenerateTokensResponse!
     login: NexusGenRootTypes['LoginResponse']; // LoginResponse!
     signup: NexusGenRootTypes['SignupResponse']; // SignupResponse!
   }
@@ -113,6 +125,9 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    generateTokens: { // args
+      refreshToken: string; // String!
+    }
     login: { // args
       password: string; // String!
       username: string; // String!
@@ -126,14 +141,15 @@ export interface NexusGenArgTypes {
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
+  GenerateTokensResponse: "AuthResult" | "GenerateTokensError"
   LoginResponse: "AuthResult" | "LoginError"
   SignupResponse: "AuthResult" | "SignupError"
-  InputError: "LoginError" | "SignupError"
+  InputError: "GenerateTokensError" | "LoginError" | "SignupError"
 }
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AuthResult" | "InputArgError" | "LoginError" | "Mutation" | "Query" | "SignupError" | "User" | "UsersResult";
+export type NexusGenObjectNames = "AuthResult" | "GenerateTokensError" | "InputArgError" | "LoginError" | "Mutation" | "Query" | "SignupError" | "User" | "UsersResult";
 
 export type NexusGenInputNames = never;
 
@@ -143,7 +159,7 @@ export type NexusGenInterfaceNames = "InputError";
 
 export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
 
-export type NexusGenUnionNames = "LoginResponse" | "SignupResponse";
+export type NexusGenUnionNames = "GenerateTokensResponse" | "LoginResponse" | "SignupResponse";
 
 export interface NexusGenTypes {
   context: any;

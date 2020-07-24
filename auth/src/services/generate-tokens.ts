@@ -8,6 +8,7 @@ import {
 } from '../config/constants'
 import { RefreshTokenModel } from '../models/refresh-token'
 import { AccessTokenPayload, UserRole } from '../utils/access-token-payload'
+import { RefreshTokenPayload } from '../utils/refresh-token-payload'
 
 const RANDOM_BYTES_SIZE = 16
 
@@ -35,12 +36,13 @@ export const generateTokens = async (
     { relate: true },
   )
 
-  const payload: AccessTokenPayload = { userId, role }
+  const accessTokenPayload: AccessTokenPayload = { userId, role }
+  const refreshTokenPayload: RefreshTokenPayload = { jti, userId }
   const [accessToken, refreshToken] = await Promise.all([
-    sign(payload, ENV.JWT_SECRET, {
+    sign(accessTokenPayload, ENV.JWT_SECRET, {
       expiresIn: ACCESS_TOKEN_EXPIRES_IN_SEC,
     }),
-    sign({ jti, userId, role }, ENV.JWT_SECRET, {
+    sign(refreshTokenPayload, ENV.JWT_SECRET, {
       expiresIn: REFRESH_TOKEN_EXPIRES_IN_SEC,
     }),
   ])
