@@ -8,9 +8,9 @@ import { UserRole } from '../utils/access-token-payload'
 export const SignupResponseType = unionType({
   name: 'SignupResponse',
   definition(t) {
-    t.members('SignupResult', 'SignupError')
+    t.members('AuthResult', 'SignupError')
     t.resolveType((root) =>
-      'argErrors' in root ? 'SignupError' : 'SignupResult',
+      'argErrors' in root ? 'SignupError' : 'AuthResult',
     )
   },
 })
@@ -25,16 +25,7 @@ export const SignupErrorType = objectType({
   },
 })
 
-export const SignupResultType = objectType({
-  name: 'SignupResult',
-  definition(t) {
-    t.string('accessToken')
-    t.string('refreshToken')
-    t.field('user', { type: 'User' })
-  },
-})
-
-export const MutationSignup = extendType({
+export const SignupMutation = extendType({
   type: 'Mutation',
   definition(t) {
     t.field('signup', {

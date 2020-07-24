@@ -4,11 +4,16 @@ import Knex from 'knex'
 import { Model } from 'objection'
 import { join } from 'path'
 import { ENV } from './config/constants'
+import { AuthResultType } from './graphql/auth-result-type'
 import {
-  MutationSignup,
+  LoginErrorType,
+  LoginMutation,
+  LoginResponseType,
+} from './graphql/login'
+import {
   SignupErrorType,
+  SignupMutation,
   SignupResponseType,
-  SignupResultType,
 } from './graphql/signup'
 import { QueryUsers, UsersResultType, UserType } from './graphql/user-type'
 import { InputArgErrorType, InputErrorInterface } from './utils/input-error'
@@ -25,12 +30,15 @@ const schema = makeSchema({
     InputArgErrorType,
     InputErrorInterface,
     UserType,
-    MutationSignup,
-    SignupResultType,
     QueryUsers,
     UsersResultType,
+    AuthResultType,
+    SignupMutation,
     SignupResponseType,
     SignupErrorType,
+    LoginMutation,
+    LoginResponseType,
+    LoginErrorType,
   ],
   outputs: {
     schema: join(__dirname, 'generated', 'schema.graphql'),

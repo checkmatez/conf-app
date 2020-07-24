@@ -20,8 +20,18 @@ export interface NexusGenEnums {
 }
 
 export interface NexusGenRootTypes {
+  AuthResult: { // root type
+    accessToken: string; // String!
+    refreshToken: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   InputArgError: { // root type
     argName: string; // String!
+    message: string; // String!
+  }
+  LoginError: { // root type
+    argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
+    code: string; // String!
     message: string; // String!
   }
   Mutation: {};
@@ -30,11 +40,6 @@ export interface NexusGenRootTypes {
     argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
     code: string; // String!
     message: string; // String!
-  }
-  SignupResult: { // root type
-    accessToken: string; // String!
-    refreshToken: string; // String!
-    user: NexusGenRootTypes['User']; // User!
   }
   User: { // root type
     avatarUrl?: string | null; // String
@@ -47,24 +52,36 @@ export interface NexusGenRootTypes {
     nodes: NexusGenRootTypes['User'][]; // [User!]!
     total: number; // Int!
   }
-  InputError: NexusGenRootTypes['SignupError'];
+  InputError: NexusGenRootTypes['LoginError'] | NexusGenRootTypes['SignupError'];
   String: string;
   Int: number;
   Float: number;
   Boolean: boolean;
   ID: string;
-  SignupResponse: NexusGenRootTypes['SignupError'] | NexusGenRootTypes['SignupResult'];
+  LoginResponse: NexusGenRootTypes['AuthResult'] | NexusGenRootTypes['LoginError'];
+  SignupResponse: NexusGenRootTypes['AuthResult'] | NexusGenRootTypes['SignupError'];
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
 }
 
 export interface NexusGenFieldTypes {
+  AuthResult: { // field return type
+    accessToken: string; // String!
+    refreshToken: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   InputArgError: { // field return type
     argName: string; // String!
     message: string; // String!
   }
+  LoginError: { // field return type
+    argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
+    code: string; // String!
+    message: string; // String!
+  }
   Mutation: { // field return type
+    login: NexusGenRootTypes['LoginResponse']; // LoginResponse!
     signup: NexusGenRootTypes['SignupResponse']; // SignupResponse!
   }
   Query: { // field return type
@@ -75,11 +92,6 @@ export interface NexusGenFieldTypes {
     argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
     code: string; // String!
     message: string; // String!
-  }
-  SignupResult: { // field return type
-    accessToken: string; // String!
-    refreshToken: string; // String!
-    user: NexusGenRootTypes['User']; // User!
   }
   User: { // field return type
     avatarUrl: string | null; // String
@@ -101,6 +113,10 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    login: { // args
+      password: string; // String!
+      username: string; // String!
+    }
     signup: { // args
       email?: string | null; // String
       password: string; // String!
@@ -110,13 +126,14 @@ export interface NexusGenArgTypes {
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
-  SignupResponse: "SignupError" | "SignupResult"
-  InputError: "SignupError"
+  LoginResponse: "AuthResult" | "LoginError"
+  SignupResponse: "AuthResult" | "SignupError"
+  InputError: "LoginError" | "SignupError"
 }
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "InputArgError" | "Mutation" | "Query" | "SignupError" | "SignupResult" | "User" | "UsersResult";
+export type NexusGenObjectNames = "AuthResult" | "InputArgError" | "LoginError" | "Mutation" | "Query" | "SignupError" | "User" | "UsersResult";
 
 export type NexusGenInputNames = never;
 
@@ -126,7 +143,7 @@ export type NexusGenInterfaceNames = "InputError";
 
 export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
 
-export type NexusGenUnionNames = "SignupResponse";
+export type NexusGenUnionNames = "LoginResponse" | "SignupResponse";
 
 export interface NexusGenTypes {
   context: any;
