@@ -5,6 +5,6 @@ export const makeListResult = (name: string, type: string) =>
     name,
     definition(t) {
       t.int('total')
-      t.list.field('nodes', { type })
+      t.list.field('nodes', { type: type as any })
     },
   })

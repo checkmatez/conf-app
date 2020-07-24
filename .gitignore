@@ -96,4 +96,5 @@ Thumbs.db
 
 # Build artifacts
 dist/
+auth/migrations-dist/
 build/

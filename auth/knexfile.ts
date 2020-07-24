@@ -15,9 +15,9 @@ module.exports = {
   },
   migrations: {
     tableName: 'knex_migrations',
-    directory: './migrations',
-    extension: 'ts',
-    stub: './migrations/_stub.ts',
+    directory: './migrations-dist',
+    extension: 'js',
+    stub: './migrations/_stub.js',
   },
   seeds: {
     directory: './seeds',
