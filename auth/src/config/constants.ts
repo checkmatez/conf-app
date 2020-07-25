@@ -10,6 +10,8 @@ export const ENV = cleanEnv(
     DB_NAME: { type: 'string', _parse: String },
     DB_USERNAME: { type: 'string', _parse: String },
     DB_PASSWORD: { type: 'string', _parse: String },
+    ADMIN_USERNAME: { type: 'string', _parse: String },
+    ADMIN_PASSWORD: { type: 'string', _parse: String },
   },
   { dotEnvPath: null, strict: true },
 )

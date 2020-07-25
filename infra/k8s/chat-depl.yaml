@@ -28,7 +28,29 @@ spec:
         app: chat
     spec:
       initContainers:
+        - name: wait-db
+          image: waisbrot/wait
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: '32Mi'
+          env:
+            - name: TARGETS
+              value: 'postgres-srv:5432'
         - name: init-chat-db
+          image: postgres:11
+          command: ['sh', '-c', 'createdb conf_app_chat || true']
+          env:
+            - name: PGHOST
+              value: 'postgres-srv'
+            - name: PGUSER
+              value: 'postgres'
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: password
+        - name: init-chat-migrations
           image: checkmatez/conf-chat
           command: ['yarn', 'run', 'migrate']
           env:

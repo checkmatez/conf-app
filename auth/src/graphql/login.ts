@@ -2,7 +2,6 @@ import { extendType, objectType, stringArg, unionType } from '@nexus/schema'
 import { UserModel } from '../models/user-model'
 import { generateTokens } from '../services/generate-tokens'
 import { comparePasswords } from '../services/password'
-import { UserRole } from '../utils/access-token-payload'
 
 export const LoginResponseType = unionType({
   name: 'LoginResponse',
@@ -52,7 +51,7 @@ export const LoginMutation = extendType({
 
         const { accessToken, refreshToken } = await generateTokens(
           existingUser.id,
-          UserRole.Attendee,
+          existingUser.role,
         )
 
         return {

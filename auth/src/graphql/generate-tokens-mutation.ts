@@ -2,7 +2,6 @@ import { extendType, objectType, stringArg, unionType } from '@nexus/schema'
 import { UserModel } from '../models/user-model'
 import { generateTokens } from '../services/generate-tokens'
 import { useRefreshToken } from '../services/use-refresh-token'
-import { UserRole } from '../utils/access-token-payload'
 
 export const GenerateTokensResponseType = unionType({
   name: 'GenerateTokensResponse',
@@ -35,10 +34,8 @@ export const GenerateTokensMutation = extendType({
       resolve: async (_, { refreshToken }, ctx) => {
         try {
           const payload = await useRefreshToken(refreshToken)
-          const [tokens, user] = await Promise.all([
-            generateTokens(payload.userId, UserRole.Attendee),
-            UserModel.query().findById(payload.userId),
-          ])
+          const user = await UserModel.query().findById(payload.userId)
+          const tokens = await generateTokens(payload.userId, user.role)
 
           return {
             accessToken: tokens.accessToken,

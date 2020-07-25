@@ -11,6 +11,14 @@ export async function up(knex: Knex): Promise<void> {
       .defaultTo(knex.raw('uuid_generate_v4()'))
     table.string('username', 255).unique().notNullable()
     table.string('password', 1023).notNullable()
+    table
+      .enum('role', [], {
+        useNative: true,
+        existingType: true,
+        enumName: 'user_role',
+      })
+      .notNullable()
+      .defaultTo('attendee')
     table.string('email', 255)
     table.string('avatar_url', 1023)
     table.timestamps(true, true)

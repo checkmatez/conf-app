@@ -7,4 +7,5 @@ Model.knex(knex)
 
 server.listen({ port: ENV.PORT }).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`)
+  console.log(`Woohoo`)
 })
