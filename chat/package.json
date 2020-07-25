@@ -4,8 +4,8 @@
   "main": "dist/start.js",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf migrations-dist && tsc",
-    "build:migrations": "rimraf dist && tsc -p tsconfig.migrations.json",
+    "build": "rimraf dist && tsc",
+    "build:migrations": "rimraf migrations-dist && tsc -p tsconfig.migrations.json",
     "dev": "nodemon --exec \"ts-node -r dotenv/config src/start.ts\"",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
