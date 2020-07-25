@@ -1,11 +1,11 @@
 {
-  "name": "auth",
+  "name": "chat",
   "version": "1.0.0",
   "main": "dist/start.js",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf dist && tsc",
-    "build:migrations": "tsc -p tsconfig.migrations.json",
+    "build": "rimraf migrations-dist && tsc",
+    "build:migrations": "rimraf dist && tsc -p tsconfig.migrations.json",
     "dev": "nodemon --exec \"ts-node -r dotenv/config src/start.ts\"",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
@@ -17,6 +17,8 @@
     "apollo-server": "^2.16.0",
     "envalid": "^6.0.2",
     "graphql": "^15.3.0",
+    "graphql-middleware": "^4.0.2",
+    "graphql-shield": "^7.3.2",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.2",
     "objection": "^2.2.1",

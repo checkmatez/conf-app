@@ -20,12 +20,11 @@ export interface NexusGenEnums {
 }
 
 export interface NexusGenRootTypes {
-  AuthResult: { // root type
-    accessToken: string; // String!
-    refreshToken: string; // String!
-    user: NexusGenRootTypes['User']; // User!
+  ChatRoom: { // root type
+    id: string; // ID!
+    name: string; // String!
   }
-  GenerateTokensError: { // root type
+  CreateChatRoomError: { // root type
     argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
     code: string; // String!
     message: string; // String!
@@ -34,18 +33,14 @@ export interface NexusGenRootTypes {
     argName: string; // String!
     message: string; // String!
   }
-  LoginError: { // root type
-    argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
-    code: string; // String!
-    message: string; // String!
+  Message: { // root type
+    author: NexusGenRootTypes['User']; // User!
+    chatRoom: NexusGenRootTypes['ChatRoom']; // ChatRoom!
+    id: string; // ID!
+    text: string; // String!
   }
   Mutation: {};
   Query: {};
-  SignupError: { // root type
-    argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
-    code: string; // String!
-    message: string; // String!
-  }
   User: { // root type
     avatarUrl?: string | null; // String
     email?: string | null; // String
@@ -53,31 +48,24 @@ export interface NexusGenRootTypes {
     id: string; // ID!
     username: string; // String!
   }
-  UsersResult: { // root type
-    nodes: NexusGenRootTypes['User'][]; // [User!]!
-    total: number; // Int!
-  }
-  InputError: NexusGenRootTypes['GenerateTokensError'] | NexusGenRootTypes['LoginError'] | NexusGenRootTypes['SignupError'];
+  InputError: NexusGenRootTypes['CreateChatRoomError'];
   String: string;
   Int: number;
   Float: number;
   Boolean: boolean;
   ID: string;
-  GenerateTokensResponse: NexusGenRootTypes['AuthResult'] | NexusGenRootTypes['GenerateTokensError'];
-  LoginResponse: NexusGenRootTypes['AuthResult'] | NexusGenRootTypes['LoginError'];
-  SignupResponse: NexusGenRootTypes['AuthResult'] | NexusGenRootTypes['SignupError'];
+  CreateChatRoomResponse: NexusGenRootTypes['ChatRoom'] | NexusGenRootTypes['CreateChatRoomError'];
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
 }
 
 export interface NexusGenFieldTypes {
-  AuthResult: { // field return type
-    accessToken: string; // String!
-    refreshToken: string; // String!
-    user: NexusGenRootTypes['User']; // User!
+  ChatRoom: { // field return type
+    id: string; // ID!
+    name: string; // String!
   }
-  GenerateTokensError: { // field return type
+  CreateChatRoomError: { // field return type
     argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
     code: string; // String!
     message: string; // String!
@@ -86,24 +74,18 @@ export interface NexusGenFieldTypes {
     argName: string; // String!
     message: string; // String!
   }
-  LoginError: { // field return type
-    argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
-    code: string; // String!
-    message: string; // String!
+  Message: { // field return type
+    author: NexusGenRootTypes['User']; // User!
+    chatRoom: NexusGenRootTypes['ChatRoom']; // ChatRoom!
+    id: string; // ID!
+    text: string; // String!
   }
   Mutation: { // field return type
-    generateTokens: NexusGenRootTypes['GenerateTokensResponse']; // GenerateTokensResponse!
-    login: NexusGenRootTypes['LoginResponse']; // LoginResponse!
-    signup: NexusGenRootTypes['SignupResponse']; // SignupResponse!
+    createChatRoom: NexusGenRootTypes['CreateChatRoomResponse']; // CreateChatRoomResponse!
+    newChatMessage: NexusGenRootTypes['Message']; // Message!
   }
   Query: { // field return type
     serviceDescription: string; // String!
-    users: NexusGenRootTypes['UsersResult']; // UsersResult!
-  }
-  SignupError: { // field return type
-    argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
-    code: string; // String!
-    message: string; // String!
   }
   User: { // field return type
     avatarUrl: string | null; // String
@@ -111,10 +93,6 @@ export interface NexusGenFieldTypes {
     githubProfileUrl: string | null; // String
     id: string; // ID!
     username: string; // String!
-  }
-  UsersResult: { // field return type
-    nodes: NexusGenRootTypes['User'][]; // [User!]!
-    total: number; // Int!
   }
   InputError: { // field return type
     argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
@@ -125,31 +103,24 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    generateTokens: { // args
-      refreshToken: string; // String!
+    createChatRoom: { // args
+      name: string; // String!
     }
-    login: { // args
-      password: string; // String!
-      username: string; // String!
-    }
-    signup: { // args
-      email?: string | null; // String
-      password: string; // String!
-      username: string; // String!
+    newChatMessage: { // args
+      chatRoomId: string; // ID!
+      text: string; // String!
     }
   }
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
-  GenerateTokensResponse: "AuthResult" | "GenerateTokensError"
-  LoginResponse: "AuthResult" | "LoginError"
-  SignupResponse: "AuthResult" | "SignupError"
-  InputError: "GenerateTokensError" | "LoginError" | "SignupError"
+  CreateChatRoomResponse: "ChatRoom" | "CreateChatRoomError"
+  InputError: "CreateChatRoomError"
 }
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AuthResult" | "GenerateTokensError" | "InputArgError" | "LoginError" | "Mutation" | "Query" | "SignupError" | "User" | "UsersResult";
+export type NexusGenObjectNames = "ChatRoom" | "CreateChatRoomError" | "InputArgError" | "Message" | "Mutation" | "Query" | "User";
 
 export type NexusGenInputNames = never;
 
@@ -159,7 +130,7 @@ export type NexusGenInterfaceNames = "InputError";
 
 export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
 
-export type NexusGenUnionNames = "GenerateTokensResponse" | "LoginResponse" | "SignupResponse";
+export type NexusGenUnionNames = "CreateChatRoomResponse";
 
 export interface NexusGenTypes {
   context: any;
