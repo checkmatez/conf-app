@@ -99,5 +99,15 @@ spec:
                 secretKeyRef:
                   name: auth-db
                   key: password
+            - name: ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: auth-admin
+                  key: username
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: auth-admin
+                  key: password
             - name: NODE_ENV
               value: 'production'
