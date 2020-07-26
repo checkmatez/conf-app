@@ -1,5 +1,5 @@
+import { UserRole } from '@checkmatez-conf/common'
 import { RelationMappings } from 'objection'
-import { UserRole } from '../utils/access-token-payload'
 import { BaseModel } from './base-model'
 
 export class UserModel extends BaseModel {

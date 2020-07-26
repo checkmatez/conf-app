@@ -1,9 +1,9 @@
+import { UserRole } from '@checkmatez-conf/common'
 import { extendType, objectType, stringArg, unionType } from '@nexus/schema'
 import { UniqueViolationError } from 'objection'
 import { UserModel } from '../models/user-model'
 import { generateTokens } from '../services/generate-tokens'
 import { passwordToHash } from '../services/password'
-import { UserRole } from '../utils/access-token-payload'
 
 export const SignupResponseType = unionType({
   name: 'SignupResponse',

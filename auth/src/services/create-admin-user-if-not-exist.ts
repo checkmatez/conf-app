@@ -1,6 +1,6 @@
+import { UserRole } from '@checkmatez-conf/common'
 import { ENV } from '../config/constants'
 import { UserModel } from '../models/user-model'
-import { UserRole } from '../utils/access-token-payload'
 import { passwordToHash } from './password'
 
 export const createAdminUserIfNotExist = async () => {

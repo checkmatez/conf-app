@@ -1,6 +1,6 @@
+import { InputArgErrorType, InputErrorInterface } from '@checkmatez-conf/common'
 import { makeSchema, queryType } from '@nexus/schema'
 import { join } from 'path'
-import { InputArgErrorType, InputErrorInterface } from '../utils/input-error'
 import { ChatRoomType } from './chat-room'
 import {
   CreateChatRoomErrorType,

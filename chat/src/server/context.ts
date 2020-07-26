@@ -1,5 +1,5 @@
+import { AccessTokenPayload } from '@checkmatez-conf/common'
 import { Request } from 'express'
-import { AccessTokenPayload } from '../utils/access-token-payload'
 import { verifyAccessToken } from '../utils/verify-access-token'
 
 export interface GraphqlContext {

@@ -1,5 +1,5 @@
+import { makeListResult } from '@checkmatez-conf/common'
 import { extendType, objectType } from '@nexus/schema'
-import { makeListResult } from '../utils/make-list-result'
 
 export const UserType = objectType({
   name: 'User',

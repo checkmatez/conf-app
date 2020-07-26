@@ -1,3 +1,4 @@
+import { AccessTokenPayload, UserRole } from '@checkmatez-conf/common'
 import { randomBytes } from 'crypto'
 import * as jwt from 'jsonwebtoken'
 import { promisify } from 'util'
@@ -7,7 +8,6 @@ import {
   REFRESH_TOKEN_EXPIRES_IN_SEC,
 } from '../config/constants'
 import { RefreshTokenModel } from '../models/refresh-token'
-import { AccessTokenPayload, UserRole } from '../utils/access-token-payload'
 import { RefreshTokenPayload } from '../utils/refresh-token-payload'
 
 const RANDOM_BYTES_SIZE = 16

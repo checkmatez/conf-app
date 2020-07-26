@@ -1,7 +1,7 @@
+import { AccessTokenPayload } from '@checkmatez-conf/common'
 import * as jwt from 'jsonwebtoken'
 import { promisify } from 'util'
 import { ENV } from '../config/constants'
-import { AccessTokenPayload } from './access-token-payload'
 
 const verify = promisify<
   string,
