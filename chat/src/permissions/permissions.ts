@@ -1,5 +1,5 @@
-import { ForbiddenError } from 'apollo-server'
 import { shield } from 'graphql-shield'
+import { ForbiddenError } from '../errors/bad-request.error'
 import * as rules from './rules'
 
 export const permissions = shield(

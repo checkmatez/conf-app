@@ -34,12 +34,16 @@ type Message {
 }
 
 type Mutation {
+  addChatMessage(chatRoomId: ID!, text: String!): Message!
   createChatRoom(name: String!): CreateChatRoomResponse!
-  newChatMessage(chatRoomId: ID!, text: String!): Message!
 }
 
 type Query {
   serviceDescription: String!
+}
+
+type Subscription {
+  chatMessageAdded(chatRoomId: ID!): Message!
 }
 
 type User {

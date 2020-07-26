@@ -41,6 +41,9 @@ export interface NexusGenRootTypes {
   }
   Mutation: {};
   Query: {};
+  Subscription: { // root type
+    chatMessageAdded: NexusGenRootTypes['Message']; // Message!
+  }
   User: { // root type
     avatarUrl?: string | null; // String
     email?: string | null; // String
@@ -81,11 +84,14 @@ export interface NexusGenFieldTypes {
     text: string; // String!
   }
   Mutation: { // field return type
+    addChatMessage: NexusGenRootTypes['Message']; // Message!
     createChatRoom: NexusGenRootTypes['CreateChatRoomResponse']; // CreateChatRoomResponse!
-    newChatMessage: NexusGenRootTypes['Message']; // Message!
   }
   Query: { // field return type
     serviceDescription: string; // String!
+  }
+  Subscription: { // field return type
+    chatMessageAdded: NexusGenRootTypes['Message']; // Message!
   }
   User: { // field return type
     avatarUrl: string | null; // String
@@ -103,12 +109,17 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    addChatMessage: { // args
+      chatRoomId: string; // ID!
+      text: string; // String!
+    }
     createChatRoom: { // args
       name: string; // String!
     }
-    newChatMessage: { // args
+  }
+  Subscription: {
+    chatMessageAdded: { // args
       chatRoomId: string; // ID!
-      text: string; // String!
     }
   }
 }
@@ -120,7 +131,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "ChatRoom" | "CreateChatRoomError" | "InputArgError" | "Message" | "Mutation" | "Query" | "User";
+export type NexusGenObjectNames = "ChatRoom" | "CreateChatRoomError" | "InputArgError" | "Message" | "Mutation" | "Query" | "Subscription" | "User";
 
 export type NexusGenInputNames = never;
 

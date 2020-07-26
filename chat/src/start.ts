@@ -1,9 +1,11 @@
 import { Model } from 'objection'
+import pino from 'pino'
 import { ENV } from './config/constants'
 import { knex } from './database/knex'
 import { UserSignedUpListener } from './events/listeners/user-signed-up-listener'
+import { logger } from './logger/pino'
 import { natsWrapper } from './nats/nats-wrapper'
-import { server } from './server/server'
+import { app } from './server/server'
 
 Model.knex(knex)
 
@@ -14,15 +16,31 @@ const start = async () => {
     ENV.NATS_URL,
   )
   natsWrapper.client.on('close', () => {
-    console.log('Connection to NATS closed.')
+    logger.warn('Connection to NATS closed.')
     process.exit()
   })
 
   new UserSignedUpListener(natsWrapper.client).listen()
 
-  server.listen({ port: ENV.PORT }).then(({ url }) => {
-    console.log(`🚀  Server ready at ${url}`)
+  app.listen({ port: ENV.PORT }, () => {
+    logger.info(`🚀  Server ready at ${ENV.PORT}`)
   })
 }
 
 start()
+
+process.on(
+  'uncaughtException',
+  pino.final(logger as any, (err, finalLogger) => {
+    finalLogger.error(err, 'uncaughtException')
+    process.exit(1)
+  }),
+)
+
+process.on(
+  'unhandledRejection',
+  pino.final(logger as any, (err, finalLogger) => {
+    finalLogger.error(err, 'unhandledRejection')
+    process.exit(1)
+  }),
+)
