@@ -21,6 +21,7 @@ export async function up(knex: Knex): Promise<void> {
       .defaultTo('attendee')
     table.string('email', 255)
     table.string('avatar_url', 1023)
+    table.specificType('version', 'serial')
     table.timestamps(true, true)
     table.timestamp('deleted_at')
   })

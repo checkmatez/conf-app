@@ -1,7 +1,9 @@
 import { UserRole } from '@checkmatez-conf/common'
 import { extendType, objectType, stringArg, unionType } from '@nexus/schema'
 import { UniqueViolationError } from 'objection'
+import { UserSignedUpPublisher } from '../events/publishers/user-signed-up-publisher'
 import { UserModel } from '../models/user-model'
+import { natsWrapper } from '../nats/nats-wrapper'
 import { generateTokens } from '../services/generate-tokens'
 import { passwordToHash } from '../services/password'
 
@@ -41,6 +43,15 @@ export const SignupMutation = extendType({
           const user = await UserModel.query()
             .insert({ username, password: hash, email: email ?? undefined })
             .returning('*')
+
+          await new UserSignedUpPublisher(natsWrapper.client).publish({
+            id: user.id,
+            version: user.version,
+            createdAt: user.createdAt.toISOString(),
+            username: user.username,
+            email: user.email,
+          })
+
           const { accessToken, refreshToken } = await generateTokens(
             user.id,
             UserRole.Attendee,

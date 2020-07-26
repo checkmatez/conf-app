@@ -99,5 +99,13 @@ spec:
                 secretKeyRef:
                   name: auth-db
                   key: password
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: 'conf-app'
             - name: NODE_ENV
               value: 'production'

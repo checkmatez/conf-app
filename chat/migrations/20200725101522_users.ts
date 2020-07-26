@@ -12,6 +12,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('username', 255).unique().notNullable()
     table.string('email', 255)
     table.string('avatar_url', 1023)
+    table.integer('version')
     table.timestamps(true, true)
     table.timestamp('deleted_at')
   })

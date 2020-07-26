@@ -10,6 +10,9 @@ export const ENV = cleanEnv(
     DB_NAME: { type: 'string', _parse: String },
     DB_USERNAME: { type: 'string', _parse: String },
     DB_PASSWORD: { type: 'string', _parse: String },
+    NATS_CLUSTER_ID: { type: 'string', _parse: String },
+    NATS_CLIENT_ID: { type: 'string', _parse: String },
+    NATS_URL: { type: 'string', _parse: String },
   },
   { dotEnvPath: null, strict: true },
 )

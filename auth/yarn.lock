@@ -57,9 +57,9 @@
     js-tokens "^4.0.0"
 
 "@checkmatez-conf/common@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@checkmatez-conf/common/-/common-1.0.2.tgz#d2245dbbb3d284dc121d4613438ed007d4282a66"
-  integrity sha512-kVhEysur9l/zv9iUXX9OTbBXhjtclEKUJ+BM0SDhF3tcKio9va1WRLV81z/Y4a/1U2vcyc4rQi3yvLHGVkn3Qw==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@checkmatez-conf/common/-/common-1.0.3.tgz#f52d7cbe7c4c244a6f6becb2f8c8b8a93c327846"
+  integrity sha512-ggLQYawwXPRX97mD9LuxKvUU/cQGPYsonNIvSUtdijyBjPhv6o2tg43YNEq1D1zMNyrnxkEFN0v+URW3/4MfjA==
   dependencies:
     "@nexus/schema" "^0.14.0"
     node-nats-streaming "^0.3.2"
