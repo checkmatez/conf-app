@@ -97,6 +97,7 @@ export interface NexusGenFieldTypes {
     signup: NexusGenRootTypes['SignupResponse']; // SignupResponse!
   }
   Query: { // field return type
+    currentUser: NexusGenRootTypes['User'] | null; // User
     serviceDescription: string; // String!
     users: NexusGenRootTypes['UsersResult']; // UsersResult!
   }

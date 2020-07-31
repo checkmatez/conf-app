@@ -2,6 +2,7 @@ import { InputArgErrorType, InputErrorInterface } from '@checkmatez-conf/common'
 import { makeSchema, queryType } from '@nexus/schema'
 import { join } from 'path'
 import { AuthResultType } from './auth-result-type'
+import { CurrentUserQuery } from './current-user'
 import {
   GenerateTokensError,
   GenerateTokensMutation,
@@ -23,6 +24,7 @@ export const schema = makeSchema({
     InputArgErrorType,
     InputErrorInterface,
     UserType,
+    CurrentUserQuery,
     QueryUsers,
     UsersResultType,
     AuthResultType,
