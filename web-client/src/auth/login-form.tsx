@@ -1,10 +1,11 @@
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { Button, Stack } from '@chakra-ui/core'
 import { motion } from 'framer-motion'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { InputText } from '../components/input-text'
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../config/constants'
+import { loginMutation } from '../graphql/mutations/login-mutation'
 import { currentUserQuery } from '../graphql/queries/current-user-query'
 
 interface LoginResponse {
@@ -16,7 +17,7 @@ interface LoginResponse {
 }
 
 interface FormValues {
-  email: string
+  username: string
   password: string
 }
 
@@ -43,30 +44,18 @@ const variants = {
 export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
   const { register, handleSubmit, errors } = useForm<FormValues>()
 
-  const [login, { loading }] = useMutation<LoginResponse>(
-    gql`
-      mutation {
-        login(username: "max", password: "123") {
-          ... on AuthResult {
-            accessToken
-            refreshToken
-          }
-          ... on InputError {
-            code
-            message
-          }
-        }
+  const [login, { loading }] = useMutation<LoginResponse>(loginMutation, {
+    refetchQueries: [{ query: currentUserQuery }],
+    onCompleted: ({ login }: any) => {
+      if (login.__typename === 'LoginError') {
+        alert(login.message)
+        return
       }
-    `,
-    {
-      refetchQueries: [{ query: currentUserQuery }],
-      onCompleted: ({ login: { accessToken, refreshToken } }) => {
-        localStorage.setItem(ACCESS_TOKEN_KEY, accessToken)
-        localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken)
-        onSuccess?.()
-      },
+      localStorage.setItem(ACCESS_TOKEN_KEY, login.accessToken)
+      localStorage.setItem(REFRESH_TOKEN_KEY, login.refreshToken)
+      onSuccess?.()
     },
-  )
+  })
 
   const submitHandler = (values: FormValues) => {
     login({ variables: values })
@@ -85,10 +74,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
         minWidth="xs"
       >
         <InputText
-          name="email"
+          name="username"
           ref={register({ required: true })}
-          label="Email"
-          error={errors.email?.message}
+          label="Имя пользователя"
+          error={errors.username?.message}
           size="lg"
         />
         <InputText
