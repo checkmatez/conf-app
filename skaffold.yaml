@@ -26,3 +26,11 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: checkmatez/conf-web-client
+      context: web-client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.tsx?'
+            dest: .
