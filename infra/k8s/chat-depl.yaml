@@ -49,7 +49,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: postgres
-                  key: password
+                  key: POSTGRES_PASSWORD
         - name: init-chat-migrations
           image: checkmatez/conf-chat
           command: ['yarn', 'run', 'migrate']
@@ -63,13 +63,13 @@ spec:
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: auth-db
-                  key: username
+                  name: chat-db
+                  key: DB_USERNAME
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: auth-db
-                  key: password
+                  name: chat-db
+                  key: DB_PASSWORD
             - name: NODE_ENV
               value: 'production'
       containers:
@@ -80,7 +80,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
-                  key: jwt-secret
+                  key: JWT_SECRET
             - name: PORT
               value: '3000'
             - name: DB_HOST
@@ -92,13 +92,13 @@ spec:
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: auth-db
-                  key: username
+                  name: chat-db
+                  key: DB_USERNAME
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: auth-db
-                  key: password
+                  name: chat-db
+                  key: DB_PASSWORD
             - name: NATS_CLIENT_ID
               valueFrom:
                 fieldRef:
