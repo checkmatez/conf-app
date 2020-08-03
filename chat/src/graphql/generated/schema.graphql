@@ -7,6 +7,11 @@ type ChatRoom {
   name: String!
 }
 
+type ChatRoomsResult {
+  nodes: [ChatRoom!]!
+  total: Int!
+}
+
 type CreateChatRoomError implements InputError {
   argErrors: [InputArgError!]!
   code: String!
@@ -33,12 +38,19 @@ type Message {
   text: String!
 }
 
+type MessagesResult {
+  nodes: [Message!]!
+  total: Int!
+}
+
 type Mutation {
   addChatMessage(chatRoomId: ID!, text: String!): Message!
   createChatRoom(name: String!): CreateChatRoomResponse!
 }
 
 type Query {
+  chatRooms(page: Int = 0, pageSize: Int = 20): ChatRoomsResult!
+  messages(chatRoomId: ID!, page: Int = 0, pageSize: Int = 20): MessagesResult!
   serviceDescription: String!
 }
 

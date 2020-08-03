@@ -24,6 +24,10 @@ export interface NexusGenRootTypes {
     id: string; // ID!
     name: string; // String!
   }
+  ChatRoomsResult: { // root type
+    nodes: NexusGenRootTypes['ChatRoom'][]; // [ChatRoom!]!
+    total: number; // Int!
+  }
   CreateChatRoomError: { // root type
     argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
     code: string; // String!
@@ -38,6 +42,10 @@ export interface NexusGenRootTypes {
     chatRoom: NexusGenRootTypes['ChatRoom']; // ChatRoom!
     id: string; // ID!
     text: string; // String!
+  }
+  MessagesResult: { // root type
+    nodes: NexusGenRootTypes['Message'][]; // [Message!]!
+    total: number; // Int!
   }
   Mutation: {};
   Query: {};
@@ -68,6 +76,10 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     name: string; // String!
   }
+  ChatRoomsResult: { // field return type
+    nodes: NexusGenRootTypes['ChatRoom'][]; // [ChatRoom!]!
+    total: number; // Int!
+  }
   CreateChatRoomError: { // field return type
     argErrors: NexusGenRootTypes['InputArgError'][]; // [InputArgError!]!
     code: string; // String!
@@ -83,11 +95,17 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     text: string; // String!
   }
+  MessagesResult: { // field return type
+    nodes: NexusGenRootTypes['Message'][]; // [Message!]!
+    total: number; // Int!
+  }
   Mutation: { // field return type
     addChatMessage: NexusGenRootTypes['Message']; // Message!
     createChatRoom: NexusGenRootTypes['CreateChatRoomResponse']; // CreateChatRoomResponse!
   }
   Query: { // field return type
+    chatRooms: NexusGenRootTypes['ChatRoomsResult']; // ChatRoomsResult!
+    messages: NexusGenRootTypes['MessagesResult']; // MessagesResult!
     serviceDescription: string; // String!
   }
   Subscription: { // field return type
@@ -117,6 +135,17 @@ export interface NexusGenArgTypes {
       name: string; // String!
     }
   }
+  Query: {
+    chatRooms: { // args
+      page?: number | null; // Int
+      pageSize?: number | null; // Int
+    }
+    messages: { // args
+      chatRoomId: string; // ID!
+      page?: number | null; // Int
+      pageSize?: number | null; // Int
+    }
+  }
   Subscription: {
     chatMessageAdded: { // args
       chatRoomId: string; // ID!
@@ -131,7 +160,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "ChatRoom" | "CreateChatRoomError" | "InputArgError" | "Message" | "Mutation" | "Query" | "Subscription" | "User";
+export type NexusGenObjectNames = "ChatRoom" | "ChatRoomsResult" | "CreateChatRoomError" | "InputArgError" | "Message" | "MessagesResult" | "Mutation" | "Query" | "Subscription" | "User";
 
 export type NexusGenInputNames = never;
 

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf dist && tsc",
     "build:migrations": "rimraf migrations-dist && tsc -p tsconfig.migrations.json",
-    "dev": "nodemon --exec \"ts-node -r dotenv/config src/start.ts\"",
+    "dev": "nodemon --exec \"node --inspect=9229 -r ts-node/register -r dotenv/config src/start.ts\"",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "knex:dev": "dotenv knex",
