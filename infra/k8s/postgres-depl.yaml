@@ -23,7 +23,6 @@ spec:
   resources:
     requests:
       storage: 2Gi
-  storageClassName: do-block-storage
 ---
 apiVersion: apps/v1
 kind: Deployment
