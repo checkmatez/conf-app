@@ -9,7 +9,9 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   path,
   ...routeProps
 }) => {
-  const { data, loading } = useQuery(currentUserQuery)
+  const { data, loading } = useQuery(currentUserQuery, {
+    fetchPolicy: 'no-cache',
+  })
 
   if (loading || !data) {
     return null

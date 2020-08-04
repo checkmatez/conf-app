@@ -14,17 +14,26 @@ import {
   CHAT_GRAPHQL_WEBSOCKET,
 } from '../config/constants'
 
-const setAuthorizationLink = setContext((request, previousContext) => ({
-  headers: {
-    authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN_KEY)}`,
-  },
-}))
+// Cached token
+let token: string | null
+
+const withAccessTokenLink = setContext(() => {
+  // if we have a cached value, return it immediately
+  if (token) {
+    return { headers: { authorization: `Bearer ${token}` } }
+  }
+
+  // get and cache it
+  token = localStorage.getItem(ACCESS_TOKEN_KEY)
+
+  return { headers: { authorization: `Bearer ${token}` } }
+})
 
 const httpLink = new HttpLink({
   uri: AUTH_GRAPHQL_URI,
 })
 
-const httpWithAuth = from([setAuthorizationLink, httpLink])
+const httpWithAuth = from([withAccessTokenLink, httpLink])
 
 const wsLink = new WebSocketLink({
   uri: CHAT_GRAPHQL_WEBSOCKET,
@@ -53,4 +62,8 @@ export const apolloCache = new InMemoryCache()
 export const apolloClient = new ApolloClient({
   cache: apolloCache,
   link: splitLink,
+})
+
+apolloClient.onResetStore(async () => {
+  token = null
 })

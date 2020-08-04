@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form'
 import { InputText } from '../components/input-text'
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../config/constants'
 import { loginMutation } from '../graphql/mutations/login-mutation'
-import { currentUserQuery } from '../graphql/queries/current-user-query'
 
 interface LoginResponse {
   login: {
@@ -45,7 +44,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
   const { register, handleSubmit, errors } = useForm<FormValues>()
 
   const [login, { loading }] = useMutation<LoginResponse>(loginMutation, {
-    refetchQueries: [{ query: currentUserQuery }],
     onCompleted: ({ login }: any) => {
       if (login.__typename === 'LoginError') {
         alert(login.message)

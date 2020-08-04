@@ -11,8 +11,9 @@ export const LoginPage: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const handleSuccess = () =>
+  const handleSuccess = () => {
     navigate((location.state as LocationState)?.from ?? '/')
+  }
 
   return (
     <Flex
