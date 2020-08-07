@@ -1,8 +1,8 @@
-import { CircularProgress, PseudoBox, Stack } from '@chakra-ui/core'
+import { CircularProgress, PseudoBox, Stack, StackProps } from '@chakra-ui/core'
 import React from 'react'
 import { useChatRoomsQuery } from '../generated/graphql'
 
-interface ChatRoomsListProps {
+interface ChatRoomsListProps extends StackProps {
   selectedChatId?: string
   onChatSelect: (chatId: string) => void
 }
@@ -10,6 +10,7 @@ interface ChatRoomsListProps {
 export const ChatRoomsList: React.FC<ChatRoomsListProps> = ({
   selectedChatId,
   onChatSelect,
+  ...stackProps
 }) => {
   const { data, loading } = useChatRoomsQuery({ context: { server: 'chat' } })
 
@@ -18,7 +19,7 @@ export const ChatRoomsList: React.FC<ChatRoomsListProps> = ({
   }
 
   return (
-    <Stack flexDirection="column" spacing={2}>
+    <Stack flexDirection="column" spacing={2} {...stackProps}>
       {data?.chatRooms.nodes.map((chatRoom) => (
         <PseudoBox
           key={chatRoom.id}

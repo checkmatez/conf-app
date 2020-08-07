@@ -15,8 +15,13 @@ export const MessagesByChat: React.FC<MessagesByChatProps> = () => {
       <ChatRoomsList
         selectedChatId={selectedChatId}
         onChatSelect={setSelectedChatId}
+        flex={1}
       />
-      {selectedChatId && <MessagesList chatRoomId={selectedChatId} />}
+      {selectedChatId ? (
+        <MessagesList chatRoomId={selectedChatId} flex={1} marginLeft={4} />
+      ) : (
+        <Flex flex={1} marginLeft={4} />
+      )}
     </Flex>
   )
 }

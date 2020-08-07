@@ -171,6 +171,15 @@ export type SubscriptionChatMessageAddedArgs = {
   chatRoomId: Scalars["ID"];
 };
 
+export type AddChatMessageMutationVariables = Exact<{
+  text: Scalars["String"];
+  chatRoomId: Scalars["ID"];
+}>;
+
+export type AddChatMessageMutation = { __typename?: "Mutation" } & {
+  addChatMessage: { __typename?: "Message" } & Pick<Message, "id" | "text">;
+};
+
 export type GenerateTokensMutationVariables = Exact<{
   refreshToken: Scalars["String"];
 }>;
@@ -244,6 +253,54 @@ export type MessageAddedSubscription = { __typename?: "Subscription" } & {
   chatMessageAdded: { __typename?: "Message" } & Pick<Message, "id" | "text">;
 };
 
+export const AddChatMessageDocument = gql`
+  mutation addChatMessage($text: String!, $chatRoomId: ID!) {
+    addChatMessage(text: $text, chatRoomId: $chatRoomId) {
+      id
+      text
+    }
+  }
+`;
+
+/**
+ * __useAddChatMessageMutation__
+ *
+ * To run a mutation, you first call `useAddChatMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddChatMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addChatMessageMutation, { data, loading, error }] = useAddChatMessageMutation({
+ *   variables: {
+ *      text: // value for 'text'
+ *      chatRoomId: // value for 'chatRoomId'
+ *   },
+ * });
+ */
+export function useAddChatMessageMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddChatMessageMutation,
+    AddChatMessageMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    AddChatMessageMutation,
+    AddChatMessageMutationVariables
+  >(AddChatMessageDocument, baseOptions);
+}
+export type AddChatMessageMutationHookResult = ReturnType<
+  typeof useAddChatMessageMutation
+>;
+export type AddChatMessageMutationResult = Apollo.MutationResult<
+  AddChatMessageMutation
+>;
+export type AddChatMessageMutationOptions = Apollo.BaseMutationOptions<
+  AddChatMessageMutation,
+  AddChatMessageMutationVariables
+>;
 export const GenerateTokensDocument = gql`
   mutation generateTokens($refreshToken: String!) {
     generateTokens(refreshToken: $refreshToken) {
