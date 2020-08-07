@@ -34,16 +34,17 @@ export const graphqlOverWebsocketMiddleware = ({
   ctx.idToSubscriptions = {}
 
   const onMessage = async (data: WebSocket.Data) => {
-    ctx.logger.info('ws message', data)
+    ctx.logger.info('ws message: %o', data)
     const parsedData = getParsed(data)
     // https://github.com/apollographql/subscriptions-transport-ws/blob/master/src/message-types.ts
     // https://github.com/apollographql/subscriptions-transport-ws/blob/master/PROTOCOL.md
     if (parsedData.type === 'connection_init') {
+      ctx.logger.debug('ws connection_init %o', ctx.graphqlContext)
       ctx.graphqlContext = await getContext(parsedData.payload)
     } else if (parsedData.type === 'start') {
+      ctx.logger.debug('ws start')
       const { operationName, query, variables } = parsedData.payload
       const document = parse(query)
-      ctx.logger.info('graphqlContext', ctx.graphqlContext)
 
       const subResult = await subscribe({
         schema,
@@ -53,7 +54,7 @@ export const graphqlOverWebsocketMiddleware = ({
         variableValues: variables,
       })
       if (isExecResult(subResult)) {
-        ctx.logger.error('Error in exec:', subResult)
+        ctx.logger.error('Error in exec: %o', subResult)
         ws.send(
           JSON.stringify({
             id: parsedData.id,
@@ -66,10 +67,11 @@ export const graphqlOverWebsocketMiddleware = ({
 
       ctx.idToSubscriptions[parsedData.id] = subResult
       for await (const payload of subResult) {
-        ctx.logger.info('ws response payload=', payload)
+        ctx.logger.info('ws response payload= %o', payload)
         ws.send(JSON.stringify({ id: parsedData.id, type: 'data', payload }))
       }
     } else if (parsedData.type === 'stop') {
+      ctx.logger.debug('ws stop')
       ctx.idToSubscriptions[parsedData.id]?.return?.()
     }
   }
@@ -80,10 +82,10 @@ export const graphqlOverWebsocketMiddleware = ({
     ctx.logger.info('ws open')
   })
   ws.on('error', (err) => {
-    ctx.logger.error('ws error', err)
+    ctx.logger.error('ws error %o', err)
   })
   ws.on('close', (code, reason) => {
-    ctx.logger.info('ws close, code, reason', code, reason)
+    ctx.logger.info('ws close, code, reason %o %o', code, reason)
   })
   ws.on('ping', (data) => {
     ctx.logger.info('ws ping')

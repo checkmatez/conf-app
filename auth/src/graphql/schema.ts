@@ -1,6 +1,8 @@
 import { InputArgErrorType, InputErrorInterface } from '@checkmatez-conf/common'
 import { makeSchema, queryType } from '@nexus/schema'
+import { applyMiddleware } from 'graphql-middleware'
 import { join } from 'path'
+import { permissions } from '../permissions/permissions'
 import { AuthResultType } from './auth-result-type'
 import { CurrentUserQuery } from './current-user'
 import {
@@ -18,7 +20,7 @@ const Query = queryType({
   },
 })
 
-export const schema = makeSchema({
+export const schemaWithoutMiddlewares = makeSchema({
   types: [
     Query,
     InputArgErrorType,
@@ -43,3 +45,5 @@ export const schema = makeSchema({
     typegen: join(__dirname, 'generated', 'types.ts'),
   },
 })
+
+export const schema = applyMiddleware(schemaWithoutMiddlewares, permissions)

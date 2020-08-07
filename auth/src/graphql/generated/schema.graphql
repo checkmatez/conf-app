@@ -42,7 +42,7 @@ type Mutation {
 }
 
 type Query {
-  currentUser: User
+  currentUser: User!
   serviceDescription: String!
   users: UsersResult!
 }

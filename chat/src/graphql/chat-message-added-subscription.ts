@@ -1,4 +1,5 @@
 import { idArg, subscriptionField } from '@nexus/schema'
+import { logger } from '../logger/pino'
 import { GraphqlContext } from '../server/get-context'
 import { NexusGenArgTypes } from './generated/types'
 
@@ -7,7 +8,9 @@ async function* subscribe(
   { chatRoomId }: NexusGenArgTypes['Subscription']['chatMessageAdded'],
   ctx: GraphqlContext,
 ) {
+  logger.debug('subscrived to chat messages for roomid %s', chatRoomId)
   for await (const chatMessage of ctx.listener.subscribe()) {
+    logger.trace('received chat message %o', chatMessage)
     if (chatMessage.chatRoom.id === chatRoomId) {
       yield { chatMessageAdded: chatMessage }
     }

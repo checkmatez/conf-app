@@ -1,3 +1,4 @@
+import cors from '@koa/cors'
 import koaPlayground from 'graphql-playground-middleware-koa'
 import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
@@ -16,6 +17,7 @@ app.use(async (ctx, next) => {
   ctx.logger = logger
   return await next()
 })
+app.use(cors())
 app.use(bodyParser())
 app.use(createWebsocketMiddleware())
 app.use(graphqlOverWebsocketMiddleware({ schema }))

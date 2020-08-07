@@ -1,11 +1,10 @@
-import { useQuery } from '@apollo/client'
 import { Avatar, AvatarBadge, Flex, Text } from '@chakra-ui/core'
 import React from 'react'
-import { ChatMessages } from '../chat-messages/chat-messages'
-import { currentUserQuery } from '../graphql/queries/current-user-query'
+import { Outlet } from 'react-router-dom'
+import { useCurrentUserQuery } from '../generated/graphql'
 
 export const Main: React.FC = () => {
-  const { data } = useQuery(currentUserQuery)
+  const { data } = useCurrentUserQuery()
 
   return (
     <Flex minHeight="100vh" minWidth="100vw" flexDirection="column">
@@ -23,13 +22,15 @@ export const Main: React.FC = () => {
           </Text>
           <Avatar
             name={data?.currentUser.username}
-            src={data?.currentUser.avatarUrl}
+            src={data?.currentUser.avatarUrl ?? undefined}
           >
             <AvatarBadge size="1.3rem" bg="green.500" />
           </Avatar>
         </Flex>
       </Flex>
-      <ChatMessages />
+      <Flex flex={1} flexDirection="column" marginX={2} marginTop={2}>
+        <Outlet />
+      </Flex>
     </Flex>
   )
 }

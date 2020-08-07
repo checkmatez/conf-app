@@ -1,0 +1,29 @@
+schema:
+  - http://localhost:4070
+  - http://localhost:4071
+documents:
+  - './src/graphql/**/*.{ts,tsx}'
+generates:
+  './src/generated/graphql.tsx':
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+  # ./graphql.schema.json:
+  #   plugins:
+  #     - 'introspection'
+overwrite: true
+config:
+  noNamespaces: true
+  scalars:
+    DateTime: Date
+    Date: Date
+    Time: Date
+  withHOC: false
+  withComponent: false
+  withHooks: true
+  withMutationFn: false
+  reactApolloVersion: 3
+hooks:
+  afterAllFileWrite:
+    - prettier --write

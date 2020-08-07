@@ -1,11 +1,10 @@
-import { useMutation } from '@apollo/client'
 import { Button, Stack } from '@chakra-ui/core'
 import { motion } from 'framer-motion'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { InputText } from '../components/input-text'
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../config/constants'
-import { loginMutation } from '../graphql/mutations/login-mutation'
+import { useLoginMutation } from '../generated/graphql'
 
 interface LoginResponse {
   login: {
@@ -43,15 +42,15 @@ const variants = {
 export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
   const { register, handleSubmit, errors } = useForm<FormValues>()
 
-  const [login, { loading }] = useMutation<LoginResponse>(loginMutation, {
-    onCompleted: ({ login }: any) => {
+  const [login, { loading }] = useLoginMutation({
+    onCompleted: ({ login }) => {
       if (login.__typename === 'LoginError') {
         alert(login.message)
-        return
+      } else if (login.__typename === 'AuthResult') {
+        localStorage.setItem(ACCESS_TOKEN_KEY, login.accessToken)
+        localStorage.setItem(REFRESH_TOKEN_KEY, login.refreshToken)
+        onSuccess?.()
       }
-      localStorage.setItem(ACCESS_TOKEN_KEY, login.accessToken)
-      localStorage.setItem(REFRESH_TOKEN_KEY, login.refreshToken)
-      onSuccess?.()
     },
   })
 

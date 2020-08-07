@@ -7,12 +7,8 @@ export const CurrentUserQuery = extendType({
   definition(t) {
     t.field('currentUser', {
       type: 'User',
-      nullable: true,
       resolve: async (_, __, { user }: GraphqlContext) => {
-        if (!user) {
-          return null
-        }
-        const userInstance = await UserModel.query().findById(user.userId)
+        const userInstance = await UserModel.query().findById(user!.userId)
 
         return userInstance
       },
