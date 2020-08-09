@@ -95,3 +95,13 @@ Thumbs.db
 dist/
 migrations-dist/
 build/
+
+# Mobile
+mobile-client/.expo/*
+mobile-client/*.jks
+mobile-client/*.p8
+mobile-client/*.p12
+mobile-client/*.key
+mobile-client/*.mobileprovision
+mobile-client/*.orig.*
+mobile-client/web-build/
