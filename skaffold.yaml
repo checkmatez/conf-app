@@ -10,7 +10,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: checkmatez/conf-auth
+    - image: registry.digitalocean.com/checkmatez/conf-auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -18,7 +18,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: checkmatez/conf-chat
+    - image: registry.digitalocean.com/checkmatez/conf-chat
       context: chat
       docker:
         dockerfile: Dockerfile
@@ -26,7 +26,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: checkmatez/conf-web-client
+    - image: registry.digitalocean.com/checkmatez/conf-web-client
       context: web-client
       docker:
         dockerfile: Dockerfile

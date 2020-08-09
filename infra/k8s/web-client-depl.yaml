@@ -13,6 +13,29 @@ spec:
       port: 80
       targetPort: 80
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-client-nginx-config
+data:
+  nginx.conf: |
+    server {
+        listen       80;
+        listen  [::]:80;
+        server_name  localhost;
+        index index.html index.htm;
+
+        location / {
+            root   /usr/share/nginx/html;
+            try_files $uri /index.html;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -29,4 +52,15 @@ spec:
     spec:
       containers:
         - name: web-client
-          image: checkmatez/conf-web-client
+          image: registry.digitalocean.com/checkmatez/conf-web-client
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
+              readOnly: true
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: web-client-nginx-config
+            items:
+              - key: 'nginx.conf'
+                path: 'nginx.conf'

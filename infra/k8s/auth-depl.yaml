@@ -51,7 +51,7 @@ spec:
                   name: postgres
                   key: POSTGRES_PASSWORD
         - name: init-auth-migrations
-          image: checkmatez/conf-auth
+          image: registry.digitalocean.com/checkmatez/conf-auth
           command: ['yarn', 'run', 'migrate']
           env:
             - name: DB_HOST
@@ -74,7 +74,7 @@ spec:
               value: 'production'
       containers:
         - name: auth
-          image: checkmatez/conf-auth
+          image: registry.digitalocean.com/checkmatez/conf-auth
           env:
             - name: JWT_SECRET
               valueFrom:
@@ -83,6 +83,10 @@ spec:
                   key: JWT_SECRET
             - name: PORT
               value: '3000'
+            - name: ACCESS_TOKEN_EXPIRES_IN_SEC
+              value: '900'
+            - name: REFRESH_TOKEN_EXPIRES_IN_SEC
+              value: '2592000'
             - name: DB_HOST
               value: 'postgres-srv'
             - name: DB_PORT
@@ -117,5 +121,7 @@ spec:
                 secretKeyRef:
                   name: auth-admin
                   key: ADMIN_PASSWORD
+            - name: LOG_LEVEL
+              value: 'info'
             - name: NODE_ENV
               value: 'production'
