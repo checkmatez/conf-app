@@ -1,4 +1,5 @@
 import nats, { Stan } from 'node-nats-streaming'
+import { logger } from '../logger/pino'
 
 class NatsWrapper {
   private _client?: Stan
@@ -15,7 +16,7 @@ class NatsWrapper {
 
     return new Promise((resolve, reject) => {
       this.client.on('connect', () => {
-        console.log('Connected to NATS')
+        logger.info('Connected to NATS')
         resolve()
       })
       this.client.on('error', (err) => reject(err))

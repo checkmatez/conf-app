@@ -2,11 +2,7 @@ import { AccessTokenPayload, UserRole } from '@checkmatez-conf/common'
 import { randomBytes } from 'crypto'
 import * as jwt from 'jsonwebtoken'
 import { promisify } from 'util'
-import {
-  ACCESS_TOKEN_EXPIRES_IN_SEC,
-  ENV,
-  REFRESH_TOKEN_EXPIRES_IN_SEC,
-} from '../config/constants'
+import { ENV } from '../config/constants'
 import { RefreshTokenModel } from '../models/refresh-token'
 import { RefreshTokenPayload } from '../utils/refresh-token-payload'
 
@@ -30,7 +26,9 @@ export const generateTokens = async (
 ): Promise<AuthTokens> => {
   const jti = randomBytes(RANDOM_BYTES_SIZE).toString('hex')
 
-  const expiredAt = new Date(Date.now() + REFRESH_TOKEN_EXPIRES_IN_SEC * 1000)
+  const expiredAt = new Date(
+    Date.now() + ENV.REFRESH_TOKEN_EXPIRES_IN_SEC * 1000,
+  )
   await RefreshTokenModel.query().insertGraph(
     { jti, expiredAt, user: { id: userId } },
     { relate: true },
@@ -40,10 +38,10 @@ export const generateTokens = async (
   const refreshTokenPayload: RefreshTokenPayload = { jti, userId }
   const [accessToken, refreshToken] = await Promise.all([
     sign(accessTokenPayload, ENV.JWT_SECRET, {
-      expiresIn: ACCESS_TOKEN_EXPIRES_IN_SEC,
+      expiresIn: ENV.ACCESS_TOKEN_EXPIRES_IN_SEC,
     }),
     sign(refreshTokenPayload, ENV.JWT_SECRET, {
-      expiresIn: REFRESH_TOKEN_EXPIRES_IN_SEC,
+      expiresIn: ENV.REFRESH_TOKEN_EXPIRES_IN_SEC,
     }),
   ])
 

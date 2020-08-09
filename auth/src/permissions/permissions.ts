@@ -1,5 +1,5 @@
-import { AuthenticationError } from 'apollo-server'
 import { allow, shield } from 'graphql-shield'
+import { AuthenticationError } from '../errors/authentication-error'
 import { isAuthenticated } from './rules'
 
 export const permissions = shield(

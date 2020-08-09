@@ -1,11 +1,11 @@
 import { Model } from 'objection'
+import pino from 'pino'
 import { ENV } from './config/constants'
 import { knex } from './database/knex'
+import { logger } from './logger/pino'
 import { natsWrapper } from './nats/nats-wrapper'
-import { server } from './server/server'
+import { app } from './server/server'
 import { createAdminUserIfNotExist } from './services/create-admin-user-if-not-exist'
-
-Model.knex(knex)
 
 const start = async () => {
   await createAdminUserIfNotExist()
@@ -16,13 +16,41 @@ const start = async () => {
     ENV.NATS_URL,
   )
   natsWrapper.client.on('close', () => {
-    console.log('Connection to NATS closed.')
+    logger.warn('Connection to NATS closed.')
     process.exit()
   })
 
-  server.listen({ port: ENV.PORT }).then(({ url }) => {
-    console.log(`🚀  Server ready at ${url}`)
+  app.listen({ port: ENV.PORT }, () => {
+    logger.info(`Server listening on port ${ENV.PORT}`)
   })
 }
+
+process.on(
+  'uncaughtException',
+  ENV.isDevelopment
+    ? (err) => {
+        logger.fatal('uncaughtException: %o', err)
+        process.exit(1)
+      }
+    : pino.final(logger as any, (err, finalLogger) => {
+        finalLogger.fatal(err, 'uncaughtException')
+        process.exit(1)
+      }),
+)
+
+process.on(
+  'unhandledRejection',
+  ENV.isDevelopment
+    ? (err) => {
+        logger.fatal('unhandledRejection: %o', err)
+        process.exit(1)
+      }
+    : pino.final(logger as any, (err, finalLogger) => {
+        finalLogger.fatal(err, 'unhandledRejection')
+        process.exit(1)
+      }),
+)
+
+Model.knex(knex)
 
 start()

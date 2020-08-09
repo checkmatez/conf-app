@@ -39,7 +39,7 @@ export const graphqlOverWebsocketMiddleware = ({
     // https://github.com/apollographql/subscriptions-transport-ws/blob/master/src/message-types.ts
     // https://github.com/apollographql/subscriptions-transport-ws/blob/master/PROTOCOL.md
     if (parsedData.type === 'connection_init') {
-      ctx.logger.debug('ws connection_init %o', ctx.graphqlContext)
+      ctx.logger.debug('ws connection_init')
       ctx.graphqlContext = await getContext(parsedData.payload)
     } else if (parsedData.type === 'start') {
       ctx.logger.debug('ws start')

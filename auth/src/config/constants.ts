@@ -15,10 +15,9 @@ export const ENV = cleanEnv(
     NATS_CLUSTER_ID: { type: 'string', _parse: String },
     NATS_CLIENT_ID: { type: 'string', _parse: String },
     NATS_URL: { type: 'string', _parse: String },
+    LOG_LEVEL: { type: 'string', _parse: String },
+    ACCESS_TOKEN_EXPIRES_IN_SEC: { type: 'number', _parse: Number },
+    REFRESH_TOKEN_EXPIRES_IN_SEC: { type: 'number', _parse: Number },
   },
   { dotEnvPath: null, strict: true },
 )
-
-export const ACCESS_TOKEN_EXPIRES_IN_SEC = 900
-
-export const REFRESH_TOKEN_EXPIRES_IN_SEC = 86400 * 30

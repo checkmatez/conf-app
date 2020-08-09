@@ -1,5 +1,6 @@
 import Knex from 'knex'
 import { ENV } from '../config/constants'
+import { logger } from '../logger/pino'
 
 export const knex = Knex({
   client: 'pg',
@@ -23,6 +24,11 @@ export const knex = Knex({
   },
   seeds: {
     directory: './seeds',
+  },
+  log: {
+    debug: logger.debug.bind(logger),
+    warn: logger.warn.bind(logger),
+    error: logger.error.bind(logger),
   },
   debug: ENV.isDevelopment,
   asyncStackTraces: ENV.isDevelopment,
