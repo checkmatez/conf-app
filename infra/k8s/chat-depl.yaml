@@ -111,3 +111,29 @@ spec:
               value: 'debug'
             - name: NODE_ENV
               value: 'production'
+            - name: GRACEFUL_TIMEOUT_MS
+              value: '16000'
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            httpGet:
+              path: /liveness
+              port: http
+              scheme: HTTP
+            timeoutSeconds: 1
+          readinessProbe:
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            httpGet:
+              path: /readiness
+              port: http
+              scheme: HTTP
+            timeoutSeconds: 1

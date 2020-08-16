@@ -14,6 +14,7 @@ export const ENV = cleanEnv(
     NATS_CLIENT_ID: { type: 'string', _parse: String },
     NATS_URL: { type: 'string', _parse: String },
     LOG_LEVEL: { type: 'string', _parse: String },
+    GRACEFUL_TIMEOUT_MS: { type: 'number', _parse: Number },
   },
   { dotEnvPath: null, strict: true },
 )

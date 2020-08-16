@@ -1,6 +1,6 @@
 import { extendType } from '@nexus/schema'
+import { GraphqlContext } from '../context/get-context'
 import { UserModel } from '../models/user-model'
-import { GraphqlContext } from '../server/get-context'
 
 export const CurrentUserQuery = extendType({
   type: 'Query',

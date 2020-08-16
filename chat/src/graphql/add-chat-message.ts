@@ -1,10 +1,10 @@
 import { extendType, idArg, stringArg } from '@nexus/schema'
+import { GraphqlContext } from '../context/get-context'
 import { NewChatMessagePublisher } from '../events/publishers/new-chat-message-publisher'
 import { ChatRoomModel } from '../models/chat-room-model'
 import { MessageModel } from '../models/message-model'
 import { UserModel } from '../models/user-model'
 import { natsWrapper } from '../nats/nats-wrapper'
-import { GraphqlContext } from '../server/get-context'
 
 export const AddChatMessageMutation = extendType({
   type: 'Mutation',

@@ -1,6 +1,6 @@
 import { idArg, subscriptionField } from '@nexus/schema'
+import { GraphqlContext } from '../context/get-context'
 import { logger } from '../logger/pino'
-import { GraphqlContext } from '../server/get-context'
 import { NexusGenArgTypes } from './generated/types'
 
 async function* subscribe(

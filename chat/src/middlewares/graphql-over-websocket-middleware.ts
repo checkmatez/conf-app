@@ -1,7 +1,7 @@
 import { ExecutionResult, GraphQLSchema, parse, subscribe } from 'graphql'
 import { Next } from 'koa'
 import WebSocket from 'ws'
-import { getContext } from '../server/get-context'
+import { getContext } from '../context/get-context'
 import { WebSocketContext } from './create-websocket-middleware'
 
 const isExecResult = (

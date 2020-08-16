@@ -18,6 +18,7 @@ export const ENV = cleanEnv(
     LOG_LEVEL: { type: 'string', _parse: String },
     ACCESS_TOKEN_EXPIRES_IN_SEC: { type: 'number', _parse: Number },
     REFRESH_TOKEN_EXPIRES_IN_SEC: { type: 'number', _parse: Number },
+    GRACEFUL_TIMEOUT_MS: { type: 'number', _parse: Number },
   },
   { dotEnvPath: null, strict: true },
 )

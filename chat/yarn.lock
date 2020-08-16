@@ -2201,6 +2201,11 @@ liftoff@3.1.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
+like-server@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/like-server/-/like-server-1.0.19.tgz#7e848869f82845efb65d164c2a307d4b6339f9b8"
+  integrity sha512-vzhU97iP96I/rx3kaiqGDaQbHOcXZ/dlyR/TbHO+fUC3tRG+bNJ04FWLPfn3L6sutLUZDlPhcaGLHr3bwh7MdA==
+
 lines-and-columns@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"

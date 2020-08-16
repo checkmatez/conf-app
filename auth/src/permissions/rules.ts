@@ -1,6 +1,6 @@
 import { UserRole } from '@checkmatez-conf/common'
 import { rule } from 'graphql-shield'
-import { GraphqlContext } from '../server/get-context'
+import { GraphqlContext } from '../context/get-context'
 
 export const isAuthenticated = rule()(
   async (parent, args, { user }: GraphqlContext) => user !== null,

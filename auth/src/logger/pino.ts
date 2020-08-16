@@ -1,7 +1,7 @@
 import pino, { LogFn } from 'pino'
 import { ENV } from '../config/constants'
 
-interface Logger {
+export interface Logger {
   trace: LogFn
   debug: LogFn
   info: LogFn
