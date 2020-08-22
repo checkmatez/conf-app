@@ -1,0 +1,28 @@
+schema:
+  - http://localhost:4070
+  - http://localhost:4071
+  # - http://139.59.206.240/api/auth
+  # - http://139.59.206.240/api/chat
+documents:
+  - './src/graphql/**/*.{ts,tsx}'
+generates:
+  './src/generated/graphql.tsx':
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+overwrite: true
+config:
+  noNamespaces: true
+  scalars:
+    DateTime: Date
+    Date: Date
+    Time: Date
+  withHOC: false
+  withComponent: false
+  withHooks: true
+  withMutationFn: false
+  reactApolloVersion: 3
+hooks:
+  afterAllFileWrite:
+    - prettier --write
