@@ -1,7 +1,6 @@
-import { StackScreenProps } from '@react-navigation/stack'
 import { useTheme } from '@shopify/restyle'
 import React from 'react'
-import { AsyncStorage } from 'react-native'
+import { ActivityIndicator, AsyncStorage } from 'react-native'
 import { Box } from '../components/box'
 import { Button } from '../components/button'
 import { Stack } from '../components/stack'
@@ -9,25 +8,23 @@ import { Text } from '../components/text'
 import { TextInput } from '../components/text-input'
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../config/constants'
 import { Theme } from '../config/theme'
-import { useSignupMutation } from '../generated/graphql'
+import { useLoginMutation } from '../generated/graphql'
 import { useAuthentication } from '../hooks/use-is-authentication'
 
-interface SignupScreenProps extends StackScreenProps<any> {}
-
-export const SignupScreen = ({ navigation }: SignupScreenProps) => {
+export const LoginEmailScreen = () => {
   const { setAuthenticated } = useAuthentication()
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const theme = useTheme<Theme>()
 
-  const [signup, { loading }] = useSignupMutation({
-    onCompleted: async ({ signup }) => {
-      if (signup.__typename === 'SignupError') {
-        alert(signup.message)
-      } else if (signup.__typename === 'AuthResult') {
+  const [login, { loading }] = useLoginMutation({
+    onCompleted: async ({ login }) => {
+      if (login.__typename === 'LoginError') {
+        alert(login.message)
+      } else if (login.__typename === 'AuthResult') {
         await AsyncStorage.multiSet([
-          [ACCESS_TOKEN_KEY, signup.accessToken],
-          [REFRESH_TOKEN_KEY, signup.refreshToken],
+          [ACCESS_TOKEN_KEY, login.accessToken],
+          [REFRESH_TOKEN_KEY, login.refreshToken],
         ])
         setAuthenticated(true)
       }
@@ -60,12 +57,12 @@ export const SignupScreen = ({ navigation }: SignupScreenProps) => {
         />
       </Box>
       <Button
-        title="Зарегистрироваться"
-        onPress={() => signup({ variables: { username: email, password } })}
+        title="Войти"
+        onPress={() => login({ variables: { username: email, password } })}
       />
-      {/* {loading && (
+      {loading && (
         <ActivityIndicator size="large" color={theme.colors.primaryText} />
-      )} */}
+      )}
     </Stack>
   )
 }

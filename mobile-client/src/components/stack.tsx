@@ -1,3 +1,4 @@
+import { useTheme } from '@shopify/restyle'
 import React from 'react'
 import { View } from 'react-native'
 import { Theme } from '../config/theme'
@@ -14,6 +15,8 @@ export const Stack = React.forwardRef<View, StackProps>(
     const validChildren = React.Children.toArray(children).filter(
       React.isValidElement,
     )
+    const theme = useTheme<Theme>()
+    const marginValue = theme.spacing[spacing]
 
     return (
       <Box flexDirection={flexDirection} ref={ref} {...boxProps}>
@@ -22,8 +25,14 @@ export const Stack = React.forwardRef<View, StackProps>(
           if (isFirstChild) {
             return el
           }
-
-          const newProps = { ...(el.props as any), [marginProperty]: spacing }
+          const oldProps = el.props as any
+          const newProps = {
+            ...oldProps,
+            style: [
+              oldProps && oldProps.style,
+              { [marginProperty]: marginValue },
+            ],
+          }
           const newEl = React.cloneElement(el, newProps)
 
           return newEl

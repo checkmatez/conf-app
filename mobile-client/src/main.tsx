@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import * as React from 'react'
 import { useColorScheme } from 'react-native'
 import { AuthScreen } from './auth/auth-screen'
+import { LoginEmailScreen } from './auth/login-email-screen'
 import { SignupScreen } from './auth/signup-screen'
 import { ChatRoomScreen } from './chat-room/chat-room-screen'
 import { ChatRoomsScreen } from './chat-rooms/chat-rooms-screen'
@@ -38,6 +39,7 @@ const MainStackNavigation = () => {
           component={AuthScreen}
           options={{ headerShown: false }}
         />
+        <MainStack.Screen name="LoginByEmail" component={LoginEmailScreen} />
         <MainStack.Screen name="Signup" component={SignupScreen} />
       </MainStack.Navigator>
     )

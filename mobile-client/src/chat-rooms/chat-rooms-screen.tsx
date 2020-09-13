@@ -15,6 +15,8 @@ export const ChatRoomsScreen: React.FC<ChatRoomsScreenProps> = ({
   const { data, loading, refetch, error } = useChatRoomsQuery({
     context: { server: 'chat' },
   })
+  console.log('ChatRoomsScreen data', data)
+  console.log('ChatRoomsScreen error', error)
   const refreshControl = (
     <RefreshControl refreshing={loading} onRefresh={() => refetch()} />
   )

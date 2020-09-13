@@ -51,6 +51,10 @@ export const theme = createTheme({
     '1': 5,
     '2': 10,
   },
+  zIndices: {
+    regular: 1,
+    modal: 99,
+  },
   textVariants: {
     header: {
       fontFamily: 'System',
